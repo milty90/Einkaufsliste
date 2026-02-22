@@ -21,11 +21,7 @@ function App() {
       position: "top-center",
       style: {
         color:
-          color === "success"
-            ? "green"
-            : color === "warning"
-              ? "orange"
-              : "black",
+          color === "success" ? "green" : color === "warning" ? "red" : "black",
       },
     });
   }
