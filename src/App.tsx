@@ -68,11 +68,11 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-start mt-12 gap-6">
       <h1 className="text-3xl font-bold mb-4">Einkaufsliste</h1>
-      <div className="flex justify-between items-center w-md ">
+      <div className="flex justify-between items-center w-full md:w-1/2 gap-4">
         <Input
           type="text"
           placeholder="Produkt hinzufügen"
-          className="w-90 text-sm"
+          className="w-full text-sm"
           value={item}
           onChange={(e) => {
             setItem(e.target.value);
@@ -91,7 +91,7 @@ function App() {
       </div>
       <Button
         onClick={addToList}
-        className="w-md mb-3 disabled:bg-gray-500"
+        className="w-full md:w-1/2 mb-3 disabled:bg-gray-500"
         disabled={item === ""}
       >
         Eintrag Hinzufügen
@@ -99,7 +99,7 @@ function App() {
       {list.map((entry, item) => (
         <div
           key={item}
-          className="flex w-md justify-between items-center mt-1 p-6 border rounded-2xl border-gray-300 shadow-lg"
+          className="flex w-full md:w-1/2 justify-between items-center mt-1 p-6 border rounded-2xl border-gray-300 shadow-lg"
         >
           <div className="flex flex-col items-start">
             <p
