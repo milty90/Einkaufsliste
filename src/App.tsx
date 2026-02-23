@@ -14,7 +14,6 @@ function App() {
   const [list, setList] = useState<ListItem[]>([]);
   const [item, setItem] = useState<string>("");
   const [piece, setPiece] = useState<number>(1);
-  const [isDisabled, setIsDisabled] = useState(true);
 
   function showToast(color: "success" | "warning" | "info", message: string) {
     toast(message, {
@@ -26,37 +25,26 @@ function App() {
     });
   }
 
-  function isInputValid() {
-    if (item === "") {
-      setIsDisabled(true);
-    } else {
-      setIsDisabled(false);
-    }
-  }
-
   function isDuplicate(item: string) {
-    if (list.some((el) => el.item === item)) {
-      showToast("warning", `Produkt ${item} existiert bereits.`);
-      return true;
-    } else {
-      showToast("success", `Produkt ${item} wurde hinzugefügt.`);
-      return false;
-    }
+    return list.some((el) => el.item === item);
   }
 
   function addToList() {
     if (item && piece > 0) {
-      if (isDuplicate(item)) return;
+      if (isDuplicate(item)) {
+        showToast("warning", `Produkt ${item} existiert bereits`);
+        return;
+      }
 
       setList([{ item, piece, isDone: false }, ...list]);
       localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify([{ item, piece, isDone: false }, ...list]),
       );
+      showToast("success", `Produkt ${item} wurde hinzugefügt.`);
 
       setItem("");
       setPiece(1);
-      setIsDisabled(true);
     }
   }
 
@@ -88,7 +76,6 @@ function App() {
           value={item}
           onChange={(e) => {
             setItem(e.target.value);
-            isInputValid();
           }}
         />
         <Input
@@ -105,7 +92,7 @@ function App() {
       <Button
         onClick={addToList}
         className="w-md mb-3 disabled:bg-gray-500"
-        disabled={isDisabled}
+        disabled={item === ""}
       >
         Eintrag Hinzufügen
       </Button>
